@@ -1,0 +1,30 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  name      String
+  cpf       String   @unique
+  email     String   @unique
+  password  String
+  isMerchant Boolean @default(false)
+  balance   Float    @default(0.0)
+  transactionsSent    Transaction[] @relation("transactionsSent")
+  transactionsReceived Transaction[] @relation("transactionsReceived")
+}
+
+model Transaction {
+  id        Int      @id @default(autoincrement())
+  value     Float
+  payerId   Int
+  payeeId   Int
+  createdAt DateTime @default(now())
+  payer     User     @relation("transactionsSent", fields: [payerId], references: [id])
+  payee     User     @relation("transactionsReceived", fields: [payeeId], references: [id])
+}
