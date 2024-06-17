@@ -10,3 +10,9 @@ export class CpfInUseError extends Error {
     this.name = 'CpfInUseError';
   }
 }
+export class UserNotFound extends Error {
+  constructor() {
+    super("User not found");
+    this.name = 'UserNotFound';
+  }
+}

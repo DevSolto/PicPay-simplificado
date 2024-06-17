@@ -8,22 +8,22 @@ generator client {
 }
 
 model User {
-  id        Int      @id @default(autoincrement())
-  name      String
-  cpf       String   @unique
-  email     String   @unique
-  password  String
-  isMerchant Boolean @default(false)
-  balance   Float    @default(0.0)
-  transactionsSent    Transaction[] @relation("transactionsSent")
+  id                   String        @id @default(uuid())
+  name                 String
+  cpf                  String        @unique
+  email                String        @unique
+  password             String
+  isMerchant           Boolean       @default(false)
+  balance              Float         @default(0.0)
+  transactionsSent     Transaction[] @relation("transactionsSent")
   transactionsReceived Transaction[] @relation("transactionsReceived")
 }
 
 model Transaction {
-  id        Int      @id @default(autoincrement())
+  id        String   @id @default(uuid())
   value     Float
-  payerId   Int
-  payeeId   Int
+  payerId   String
+  payeeId   String
   createdAt DateTime @default(now())
   payer     User     @relation("transactionsSent", fields: [payerId], references: [id])
   payee     User     @relation("transactionsReceived", fields: [payeeId], references: [id])
