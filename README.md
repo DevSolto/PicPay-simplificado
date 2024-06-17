@@ -131,7 +131,7 @@ Content-Type: application/json
 
 ```http
 
-POST /transfer
+POST /transactions
 
 Content-Type: application/json
 {
